@@ -1,2 +1,1 @@
-0-current_working_directory
-1-listit
+This should explain the Shells basics project

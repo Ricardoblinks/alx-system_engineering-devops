@@ -1,1 +1,3 @@
-What my shells basics version is all about
+0-current_working_directory
+1-listit
+README.md

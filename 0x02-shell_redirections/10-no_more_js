@@ -1,2 +1,2 @@
 #!/bin/bash
-rm *.js | wc -l
+find . -type f  -name  "*.js" -delete

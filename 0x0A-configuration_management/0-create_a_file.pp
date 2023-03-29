@@ -1,4 +1,4 @@
-file { 'tmp/school':
+file { '/tmp/school':
 group => 'www-data',
 owner => 'www-data',
 mode => '0744',

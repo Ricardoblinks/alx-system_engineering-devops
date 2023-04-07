@@ -1,19 +1,28 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-function display_info() {
-    domain=$1
-    subdomain=$2
-    if [[ -z "$subdomain" ]]; then
-        subdomains=("www" "lb-01" "web-01" "web-02")
-    else
-        subdomains=("$subdomain")
-    fi
-    for sub in "${subdomains[@]}"; do
-        record=$(dig "$sub.$domain" +short)
-        record_type=$(dig "$sub.$domain" +short | awk -F' ' '{print $2}')
-        echo "The subdomain $sub is a $record_type record and points to $record"
-    done
+function audit_subdomain() {
+    local subdomain=$1
+    local record_type=$2
+    local destination=$3
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
 
-display_info "$1" "$2"
+domain=$1
+subdomain=${2:-www}  # default to www if subdomain argument is not provided
+
+# get the DNS record for the subdomain
+record=$(dig +short $subdomain.$domain)
+
+# determine the DNS record type (A or CNAME)
+record_type=$(dig $subdomain.$domain | awk '$3 == "IN" && $4 == "A" || $4 == "CNAME" {print $4}')
+
+if [[ $record_type == "A" ]]; then
+    audit_subdomain $subdomain $record_type $record
+elif [[ $record_type == "CNAME" ]]; then
+    destination=$(dig +short $subdomain.$domain)
+    audit_subdomain $subdomain $record_type $destination
+else
+    echo "Invalid subdomain $subdomain or record type $record_type"
+fi
+
 

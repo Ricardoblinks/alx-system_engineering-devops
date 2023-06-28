@@ -1,9 +1,10 @@
-#kill the program with the name killmenow
+#This manifest kills a program called killmenow
 
 exec { 'killmenow':
   command     => 'pkill killmenow',
-  path        => '/usr/bin:/bin',  # Specify the appropriate path for pkill command
-  onlyif      => 'pgrep killmenow', # Only execute the command if the process exists
-  refreshonly => true,              # Only run the command when explicitly refreshed
+  path        => ['/usr/bin', '/bin'],  # Specify the appropriate path for pkill command
+  refreshonly => true,                  # Only run the command when explicitly refreshed
+  subscribe   => File['killmenow_script'],
 }
+
 

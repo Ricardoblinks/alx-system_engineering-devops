@@ -1,0 +1,7 @@
+
+#!/usr/bin/env bash
+
+#this ssh connects to ~/.ssh/school with a user called ubuntu
+
+ssh -i ~/.ssh/school -o User=ubuntu 18.210.17.37
+

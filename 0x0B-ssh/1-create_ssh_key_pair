@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Generate the RSA key pair
-openssl genrsa -aes256 -passout pass:betty -out school.key 4096
+# Define the key file path
+key_file=~/.ssh/school
 
-# Generate the corresponding public key
-openssl rsa -in school.key -passin pass:betty -pubout -out school.pub
+# Generate the RSA key pair with passphrase
+ssh-keygen -t rsa -b 4096 -C "school" -f "$key_file" -N "betty"
 
 # Output success message
-echo "RSA key pair created successfully with the passphrase 'betty'."
+echo "RSA key pair created successfully with the passphrase 'betty'. Private key stored in $key_file."
 

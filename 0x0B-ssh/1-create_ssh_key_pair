@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Generate the RSA key pair
+openssl genrsa -aes256 -passout pass:betty -out school.key 4096
+
+# Generate the corresponding public key
+openssl rsa -in school.key -passin pass:betty -pubout -out school.pub
+
+# Output success message
+echo "RSA key pair created successfully with the passphrase 'betty'."
+
